@@ -4,24 +4,27 @@ import './style.css'
 
 const names = ['林知远', '周予安', '陈若川', '许清和', '沈言川']
 const roles = ['独立开发者', '产品设计师', '软件工程师', '数字创作者', '研究助理']
-const cities = ['杭州', '成都', '厦门', '南京', '深圳']
-const work = ['阅读清单', '城市散步', '设计笔记', '开源工具', '个人知识库', '界面练习']
-const skills = ['TypeScript', 'UI Systems', 'Writing', 'Prototyping', 'Research', 'Open Source']
+const essays = [
+  ['创造一块属于自己的数字花园', '从信息收集到日常写作，我如何维护一个可以持续生长的个人空间。'],
+  ['少即是多，也是一种技术选择', '更少的依赖、更清晰的边界，以及那些经得起时间检验的简单方案。'],
+  ['在项目之外保留好奇心', '阅读、散步与观察，常常比刻意寻找答案更接近答案。'],
+  ['写给未来自己的年度备忘', '记录这一年的变化、没有完成的计划，以及仍然愿意相信的事情。'],
+]
 
-function Portfolio({ config }: { config: PageConfig }) {
-  const name = choose(names, config.seed, 'name'), role = choose(roles, config.seed, 'role'), city = choose(cities, config.seed, 'city')
-  const selected = [0, 1, 2].map((index) => choose(work, config.seed, `work-${index}`))
-  return <main className="portfolio"><nav><span className="mark">{name.slice(0, 1)}</span><span>{name}</span><small>{config.domain}</small></nav><header><p className="eyebrow">{city} · PERSONAL NOTES</p><h1>把想法做成<br/><em>可以使用的东西。</em></h1><p className="lead">我是{name}，一名{role}。这里记录正在完成的小项目、阅读与日常观察。</p></header><section><div className="section-label">SELECTED NOTES</div><div className="cards">{selected.map((title, index) => <article key={title}><span>0{index + 1}</span><h2>{title}</h2><p>{['持续整理的信息、工具和方法。', '留给好奇心与慢慢打磨的时间。', '收集片段，等待它们自然连接。'][index]}</p></article>)}</div></section><footer><span>© {new Date().getFullYear()} {name}</span><span>Independent work & notes</span></footer></main>
-}
-
-function Resume({ config }: { config: PageConfig }) {
-  const name = choose(names, config.seed, 'name'), role = choose(roles, config.seed, 'role'), city = choose(cities, config.seed, 'city')
-  return <main className="resume"><aside><div className="avatar">{name.slice(0, 1)}</div><h1>{name}</h1><p>{role}</p><hr/><dl><dt>所在地</dt><dd>{city}</dd><dt>个人网站</dt><dd>{config.domain}</dd><dt>状态</dt><dd>开放交流</dd></dl></aside><article><header><p className="eyebrow">PROFILE / {new Date().getFullYear()}</p><h2>一个专注于细节与长期价值的{role}</h2><p>关注数字产品、工具体验与清晰的信息表达。这个页面用于展示工作方法、项目记录和学习轨迹。</p></header><section><h3>经历</h3><div className="timeline"><div><b>持续实践</b><span>近期</span><p>探索产品、设计与技术之间更自然的协作方式。</p></div><div><b>独立项目</b><span>过去几年</span><p>完成面向真实使用场景的小工具和内容项目。</p></div></div></section><section><h3>能力</h3><div className="skills">{skills.map((skill) => <span key={skill}>{skill}</span>)}</div></section><footer>© {new Date().getFullYear()} {name} · {config.domain}</footer></article></main>
+function Journal({ config }: { config: PageConfig }) {
+  const name = choose(names, config.seed, 'name')
+  const role = choose(roles, config.seed, 'role')
+  return <main className="journal"><header><a href="#top" className="logo">{name}<small>FIELD NOTES</small></a><nav><a href="#writing">文章</a><a href="#notes">短记</a><a href="#about">关于</a></nav></header>
+    <section className="intro" id="top"><p>ISSUE NO. {new Date().getFullYear()}</p><h1>写作是整理<br/><i>生活的方式</i></h1><div><span>一份关于创造、技术与日常观察的个人刊物。</span><b>{config.domain}</b></div></section>
+    <section className="featured" id="writing"><div className="feature-number">01</div><article><span>本期文章 · 8 MIN READ</span><h2>{essays[0][0]}</h2><p>{essays[0][1]}</p><a href="#top">继续阅读 →</a></article><aside><blockquote>“长期写作不是展示答案，而是持续修正自己看待世界的方式。”</blockquote><small>— {name}，{role}</small></aside></section>
+    <section className="archive" id="notes"><div className="archive-title"><p>THE ARCHIVE</p><h2>近期记录</h2></div><div>{essays.slice(1).map((essay, index) => <article key={essay[0]}><span>0{index + 2}</span><div><h3>{essay[0]}</h3><p>{essay[1]}</p></div><time>{['三月', '二月', '一月'][index]}</time></article>)}</div></section>
+    <section className="bio" id="about"><span className="portrait">{name.slice(0, 1)}</span><div><p>ABOUT THE AUTHOR</p><h2>{name}</h2><span>一名{role}。关心清晰的表达、耐用的工具，以及技术如何帮助普通人创造自己的空间。</span></div></section>
+    <footer><span>© {new Date().getFullYear()} {name}</span><span>{config.domain} · 独立发布</span></footer>
+  </main>
 }
 
 export default function App() {
   const [config, setConfig] = useState<PageConfig | null>(null)
   useEffect(() => { loadConfig().then(setConfig) }, [])
-  if (!config) return <div className="loading">Loading</div>
-  return config.template === 'resume' ? <Resume config={config} /> : <Portfolio config={config} />
+  return config ? <Journal config={config} /> : <div className="loading">Loading</div>
 }

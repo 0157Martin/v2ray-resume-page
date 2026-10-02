@@ -2,12 +2,12 @@
   "version": 1,
   "files": [
     {
-      "path": "assets/index-F0uuifV6.js",
-      "sha256": "0786eed0c55608215c5ae2d4c03886cc1513aae55b7eb7aa2ec9f10382e08861"
+      "path": "assets/index-D2sLsUV_.css",
+      "sha256": "7b4184b6346a524647a68e7f4dc20ad54af553466ca91b40d5b31bd0ccb3a564"
     },
     {
-      "path": "assets/index-l_KrpICs.css",
-      "sha256": "1130564dc6f21036fd00f679ba79868114e55d9807b2f25b8d171df5ed1a16c4"
+      "path": "assets/index-DrGvu6E3.js",
+      "sha256": "dc3a905d5fc807ad408424232c4811dc12796d12803890459024e4f72b05f819"
     },
     {
       "path": "favicon.svg",
@@ -19,7 +19,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "b2ca95d3d41d9e7da5a58c69f3a652380b3473603a9a6e32affecad1d79e433d"
+      "sha256": "df1d01f4a8f970c126ef48efacdff639b4d55ed31d2d27ba0e163eefd7f78153"
     },
     {
       "path": "site-config.json",
